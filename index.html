@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lift Price Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+
+    #door-container {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Lift Price Calculator</h2>
+  <h3>Select the following:</h3>
+
+  <label for="floors">Floors:</label>
+  <select id="floors">
+    <option value="">-- Select --</option>
+    <option value="G+1">G+1</option>
+    <option value="G+2">G+2</option>
+    <option value="G+3">G+3</option>
+  </select>
+
+  <label for="size">Size:</label>
+  <select id="size">
+    <option value="">-- Select --</option>
+    <option value="3x3">3x3</option>
+    <option value="3.6x3.6">3.6x3.6</option>
+    <option value="4x4">4x4</option>
+  </select>
+
+  <label for="model">Model:</label>
+  <select id="model">
+    <option value="">-- Select --</option>
+    <option value="Classic">Classic</option>
+    <option value="Ultra">Ultra</option>
+  </select>
+
+  <label for="type">Door Type:</label>
+  <select id="type">
+    <option value="">-- Select --</option>
+    <option value="Manual">Manual</option>
+    <option value="Auto">Auto</option>
+  </select>
+
+  <label for="doorMaterial">Structure Enclosure:</label>
+  <select id="doorMaterial">
+    <option value="">-- Select --</option>
+    <option value="ACP">ACP</option>
+    <option value="Glass (1 Side)">Glass (1 Side)</option>
+    <option value="Glass (2 Side)">Glass (2 Side)</option>
+  </select>
+
+  <!-- Swing Door Type (only shown if type is Manual) -->
+  <div id="door-container">
+    <label for="door">Swing Door Type:</label>
+    <select id="door">
+      <option value="">None</option>
+      <option value="ms_half_vision">MS Half Vision</option>
+      <option value="ms_full_vision">MS Full Vision</option>
+      <option value="ss_half_vision">SS Half Vision</option>
+      <option value="ss_full_vision">SS Full Vision</option>
+    </select>
+  </div>
+
+  <label for="location">Location:</label>
+  <select id="location">
+    <option value="">-- Select --</option>
+    <option value="Indoor">Indoor</option>
+    <option value="Outdoor">Outdoor</option>
+  </select>
+
+  <label for="additional">Extra Accessories:</label>
+  <select id="additional">
+    <option value="none">None</option>
+    <option value="rf_lop">RF (LOP) - ₹10,000</option>
+    <option value="rf_cop">RF (COP) - ₹15,000</option>
+    <option value="finger_lop">Fingerprint (LOP) - ₹15,000</option>
+    <option value="finger_cop">Fingerprint (COP) - ₹20,000</option>
+  </select>
+
+  <br /><br />
+  <button id="calculateBtn">Calculate Price</button>
+
+  <div id="result" style="margin-top: 20px;"></div>
+
+  <script>
+    // Show/hide Swing Door Type if Manual is selected
+    
+    const prices = {
+  "G+1": {
+    "3x3": {
+      "Classic": {
+        "Manual": {
+          "ACP": 500000,
+          "Glass (1 Side)": 550000,
+          "Glass (2 Side)": 580000
+        },
+        "Auto": {}
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 570000,
+          "Glass (1 Side)": 620000,
+          "Glass (2 Side)": 650000
+        },
+        "Auto": {}
+      }
+    },
+    "3.6x3.6": {
+      "Classic": {
+        "Manual": {
+          "ACP": 540000,
+          "Glass (1 Side)": 600000,
+          "Glass (2 Side)": 630000
+        },
+        "Auto": {
+          "ACP": 640000,
+          "Glass (1 Side)": 700000,
+          "Glass (2 Side)": 730000
+        }
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 620000,
+          "Glass (1 Side)": 680000,
+          "Glass (2 Side)": 710000
+        },
+        "Auto": {
+          "ACP": 720000,
+          "Glass (1 Side)": 780000,
+          "Glass (2 Side)": 810000
+        }
+      }
+    },
+    "4x4": {
+      "Classic": {
+        "Manual": {
+          "ACP": 570000,
+          "Glass (1 Side)": 640000,
+          "Glass (2 Side)": 670000
+        },
+        "Auto": {
+          "ACP": 680000,
+          "Glass (1 Side)": 750000,
+          "Glass (2 Side)": 780000
+        }
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 660000,
+          "Glass (1 Side)": 730000,
+          "Glass (2 Side)": 760000
+        },
+        "Auto": {
+          "ACP": 770000,
+          "Glass (1 Side)": 840000,
+          "Glass (2 Side)": 870000
+        }
+      }
+    }
+  },
+  "G+2": {
+    "3x3": {
+      "Classic": {
+        "Manual": {
+          "ACP": 570000,
+          "Glass (1 Side)": 650000,
+          "Glass (2 Side)": 680000
+        },
+        "Auto": {}
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 640000,
+          "Glass (1 Side)": 720000,
+          "Glass (2 Side)": 750000
+        },
+        "Auto": {}
+      }
+    },
+    "3.6x3.6": {
+      "Classic": {
+        "Manual": {
+          "ACP": 610000,
+          "Glass (1 Side)": 700000,
+          "Glass (2 Side)": 730000
+        },
+        "Auto": {
+          "ACP": 700000,
+          "Glass (1 Side)": 790000,
+          "Glass (2 Side)": 820000
+        }
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 610000,
+          "Glass (1 Side)": 700000,
+          "Glass (2 Side)": 730000
+        },
+        "Auto": {
+          "ACP": 700000,
+          "Glass (1 Side)": 790000,
+          "Glass (2 Side)": 820000
+        }
+      }
+    },
+    "4x4": {
+      "Classic": {
+        "Manual": {
+          "ACP": 660000,
+          "Glass (1 Side)": 760000,
+          "Glass (2 Side)": 780000
+        },
+        "Auto": {
+          "ACP": 750000,
+          "Glass (1 Side)": 850000,
+          "Glass (2 Side)": 870000
+        }
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 750000,
+          "Glass (1 Side)": 850000,
+          "Glass (2 Side)": 870000
+        },
+        "Auto": {
+          "ACP": 840000,
+          "Glass (1 Side)": 940000,
+          "Glass (2 Side)": 960000
+        }
+      }
+    }
+  },
+  "G+3": {
+    "3x3": {
+      "Classic": {
+        "Manual": {
+          "ACP": 670000,
+          "Glass (1 Side)": 790000,
+          "Glass (2 Side)": 830000
+        },
+        "Auto": {}
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 770000,
+          "Glass (1 Side)": 890000,
+          "Glass (2 Side)": 930000
+        },
+        "Auto": {}
+      }
+    },
+    "3.6x3.6": {
+      "Classic": {
+        "Manual": {
+          "ACP": 710000,
+          "Glass (1 Side)": 840000,
+          "Glass (2 Side)": 880000
+        },
+        "Auto": {
+          "ACP": 810000,
+          "Glass (1 Side)": 940000,
+          "Glass (2 Side)": 980000
+        }
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 710000,
+          "Glass (1 Side)": 840000,
+          "Glass (2 Side)": 880000
+        },
+        "Auto": {
+          "ACP": 810000,
+          "Glass (1 Side)": 940000,
+          "Glass (2 Side)": 980000
+        }
+      }
+    },
+    "4x4": {
+      "Classic": {
+        "Manual": {
+          "ACP": 770000,
+          "Glass (1 Side)": 910000,
+          "Glass (2 Side)": 960000
+        },
+        "Auto": {
+          "ACP": 890000,
+          "Glass (1 Side)": 1030000,
+          "Glass (2 Side)": 1080000
+        }
+      },
+      "Ultra": {
+        "Manual": {
+          "ACP": 880000,
+          "Glass (1 Side)": 1020000,
+          "Glass (2 Side)": 1070000
+        },
+        "Auto": {
+          "ACP": 1000000,
+          "Glass (1 Side)": 1140000,
+          "Glass (2 Side)": 1190000
+        }
+      }
+    }
+  }
+};
+
+document.getElementById('calculateBtn').addEventListener('click', function () {
+  const floorInput = document.getElementById('floors').value;
+  const size = document.getElementById('size').value;
+  const model = document.getElementById('model').value;
+  const type = document.getElementById('type').value;
+  const door = document.getElementById('door').value;
+  const location = document.getElementById('location').value;
+  const additional = document.getElementById('additional').value;
+  const doorMaterial = document.getElementById('doorMaterial').value;
+
+  const resultDiv = document.getElementById('result');
+
+  // Validate required fields
+if (!floorInput || !size || !model || !type || !location || additional === "" || !doorMaterial) {
+    resultDiv.textContent = "❗ Please select all options.";
+    return;
+  }
+
+  const floor = floorInput.toUpperCase();
+
+  // Get base price from predefined pricing object
+  const basePrice = prices?.[floor]?.[size]?.[model]?.[type]?.[doorMaterial];
+
+  if (basePrice === undefined) {
+    resultDiv.textContent = "❌ Price not available for the selected configuration.";
+    return;
+  }
+
+  // Floor Multiplier
+  let floorMultiplier = 1;
+  if (floor === "G+1") floorMultiplier = 2;
+  else if (floor === "G+2") floorMultiplier = 3;
+  else if (floor === "G+3") floorMultiplier = 4;
+
+  // Discount Logic
+  let discount = 0;
+  if (model === "Classic") {
+    discount = { "G+1": 5000, "G+2": 10000, "G+3": 15000 }[floor] || 0;
+  } else if (model === "Ultra") {
+    discount = { "G+1": 10000, "G+2": 15000, "G+3": 20000 }[floor] || 0;
+  }
+
+  // Additional Cost
+  const accessoryCostMap = {
+    none: 0,
+    rf_lop: 10000,
+    rf_cop: 15000,
+    finger_lop: 15000,
+    finger_cop: 20000
+  };
+  const additionalCost = accessoryCostMap[additional] || 0;
+
+  // Door Cost (only if type is Manual)
+  let doorCost = 0;
+  let baseDoorCost = 0;
+
+  if (type === "Manual") {
+    const doorCostMap = {
+      none : 0,
+      ms_half_vision: 15000,
+      ms_full_vision: 20000,
+      ss_half_vision: 25000,
+      ss_full_vision: 30000
+    };
+    baseDoorCost = doorCostMap[door] || 0;
+    doorCost = baseDoorCost * floorMultiplier;
+  }
+
+  // Outdoor cost
+  const outdoorCost = location === "Outdoor" ? 40000 : 0;
+
+  // Total Calculations
+  const totalAdditional = additionalCost + doorCost + outdoorCost;
+  const totalBeforeDiscount = basePrice + totalAdditional;
+  const finalPrice = totalBeforeDiscount - discount;
+
+  // Result Output
+  resultDiv.innerHTML = `
+    ✅ <strong>Base Price</strong>: ₹
+    ${basePrice.toLocaleString("en-IN")}<br>
+    ✅ <strong>Door Cost</strong>: ₹${doorCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Extra Accesories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
+    ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
+    💰 <strong>Final Price</strong>: ₹${finalPrice.toLocaleString("en-IN")}
+  `;
+});
+
+
+    document.getElementById('type').addEventListener('change', function () {
+      const doorContainer = document.getElementById('door-container');
+      if (this.value === 'Manual') {
+        doorContainer.style.display = 'block';
+      } else {
+        doorContainer.style.display = 'none';
+        document.getElementById('door').value = '';
+      }
+    });
+
+    // Restrict Door Type options based on Size
+    const sizeSelect = document.getElementById('size');
+    const typeSelect = document.getElementById('type');
+    const originalTypeOptions = Array.from(typeSelect.options);
+
+    sizeSelect.addEventListener('change', function () {
+      const selectedSize = this.value;
+      typeSelect.innerHTML = '';
+
+      if (selectedSize === '3x3') {
+        const manualOption = originalTypeOptions.find(opt => opt.value === 'Manual');
+        typeSelect.appendChild(manualOption.cloneNode(true));
+        typeSelect.value = 'Manual'; // select Manual by default
+
+        // Show swing door container because Manual is selected
+        document.getElementById('door-container').style.display = 'block';
+        document.getElementById('door').value = ''; // reset swing door select
+      } else {
+        originalTypeOptions.forEach(opt => typeSelect.appendChild(opt.cloneNode(true)));
+
+        // Reset door type and hide swing door container
+        typeSelect.value = '';
+        document.getElementById('door-container').style.display = 'none';
+        document.getElementById('door').value = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
