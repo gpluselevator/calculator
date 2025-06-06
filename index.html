@@ -108,6 +108,37 @@
     <option value="finger_cop">Fingerprint (COP) - ₹20,000</option>
   </select>
 
+<!-- AMC Dropdown -->
+<label for="amc">AMC (Annual Maintenance Contract):</label>
+<select id="amc">
+  <option value="no">No</option>
+  <option value="yes">Yes</option>
+</select>
+
+<!-- AMC Type Dropdown (hidden by default) -->
+<div id="amc-type-container" style="display: none;">
+  <label for="amc-type">AMC Type:</label>
+  <select id="amc-type">
+    <option value="Basic">Basic</option>
+    <option value="Comprehensive">Comprehensive</option>
+  </select>
+</div>
+
+<!-- JavaScript to show/hide AMC Type Dropdown -->
+<script>
+  // Show/hide AMC Type Dropdown based on AMC selection
+  document.getElementById('amc').addEventListener('change', function () {
+    const amcTypeContainer = document.getElementById('amc-type-container');
+    if (this.value === 'yes') {
+      amcTypeContainer.style.display = 'block'; // Show AMC Type Dropdown
+    } else {
+      amcTypeContainer.style.display = 'none'; // Hide AMC Type Dropdown
+    }
+  });
+</script>
+
+
+
   <br /><br />
   <button id="calculateBtn">Calculate Price</button>
 
@@ -420,7 +451,6 @@ if (!floorInput || !size || !model || !type || !location || additional === "" ||
     ✅ <strong>Extra Accesories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
     ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
-    💰 <strong>Final Price</strong>: ₹${finalPrice.toLocaleString("en-IN")}
   `;
 });
 
@@ -461,7 +491,140 @@ if (!floorInput || !size || !model || !type || !location || additional === "" ||
         document.getElementById('door').value = '';
       }
     });
-  </script>
 
+    // AMC Prices based on model, door type, and floors
+const amcPrices = {
+  "Basic": {
+    "Manual": {
+      "G+1": {
+        "Classic": 8000,
+        "Ultra": 12000
+      },
+      "G+2": {
+        "Classic": 20000,
+        "Ultra": 14000
+      }
+    },
+    "Auto": {
+      "G+1": {
+        "Classic": 10000,
+        "Ultra": 14000
+      },
+      "G+2": {
+        "Classic": 12000,
+        "Ultra": 17000
+      }
+    }
+  },
+  "Comprehensive": {
+    "Manual": {
+      "G+1": {
+        "Classic": 30000,
+        "Ultra": 35000
+      },
+      "G+2": {
+        "Classic": 40000,
+        "Ultra": 45000
+      }
+    },
+    "Auto": {
+      "G+1": {
+        "Classic": 40000,
+        "Ultra": 45000
+      },
+      "G+2": {
+        "Classic": 50000,
+        "Ultra": 55000
+      }
+    }
+  }
+};
+
+// AMC Cost Calculation
+document.getElementById('calculateBtn').addEventListener('click', function () {
+  const floorInput = document.getElementById('floors').value; // Get floors (G+1, G+2, etc.)
+  const size = document.getElementById('size').value; // Get size (3x3, 3.6x3.6, etc.)
+  const model = document.getElementById('model').value; // Get model (Classic/Ultra)
+  const type = document.getElementById('type').value; // Get door type (Manual/Auto)
+  const doorMaterial = document.getElementById('doorMaterial').value; // Get door material (ACP, Glass, etc.)
+  const amc = document.getElementById('amc').value.trim().toLowerCase(); // Get AMC selection (yes/no) and normalize
+  const amcType = document.getElementById('amc-type').value; // Get AMC type (Basic/Comprehensive)
+
+  // Debugging: Log values
+  console.log("AMC:", amc);
+  console.log("AMC Type:", amcType);
+  console.log("Door Type:", type);
+  console.log("Floors:", floorInput);
+  console.log("Model:", model);
+
+  // Get base price from the prices object
+  const basePrice = prices[floorInput][size][model][type][doorMaterial];
+
+  // Calculate Swing Door Cost (if applicable)
+  let swingDoorCost = 0;
+  if (type === "Manual") {
+    const door = document.getElementById('door').value;
+    const doorCostMap = {
+      none: 0,
+      ms_half_vision: 15000,
+      ms_full_vision: 20000,
+      ss_half_vision: 25000,
+      ss_full_vision: 30000
+    };
+    swingDoorCost = doorCostMap[door] || 0;
+  }
+
+  // Calculate Indoor/Outdoor Cost
+  const location = document.getElementById('location').value;
+  const outdoorCost = location === "Outdoor" ? 40000 : 0;
+
+  // Calculate Extra Accessories Cost
+  const additional = document.getElementById('additional').value;
+  const accessoryCostMap = {
+    none: 0,
+    rf_lop: 10000,
+    rf_cop: 15000,
+    finger_lop: 15000,
+    finger_cop: 20000
+  };
+  const additionalCost = accessoryCostMap[additional] || 0;
+
+  // Calculate Discount
+  let discount = 0;
+  if (model === "Classic") {
+    discount = { "G+1": 5000, "G+2": 10000, "G+3": 15000 }[floorInput] || 0;
+  } else if (model === "Ultra") {
+    discount = { "G+1": 10000, "G+2": 15000, "G+3": 20000 }[floorInput] || 0;
+  }
+
+  // Calculate AMC Cost
+  let amcCost = 0;
+  if (amc === "yes") {
+    // Debugging: Log AMC Prices
+    console.log("AMC Prices:", amcPrices[amcType][type][floorInput][model]);
+
+    // Ensure AMC Cost is calculated correctly
+    amcCost = amcPrices[amcType][type][floorInput][model] || 0; // Use fallback in case of undefined
+  }
+
+  // Calculate Total Additional Cost
+  const totalAdditional = swingDoorCost + outdoorCost + additionalCost;
+
+  // Calculate Final Price
+  const totalPrice = basePrice + totalAdditional - discount;
+
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = `
+    ✅ <strong>Base Price</strong>: ₹${basePrice.toLocaleString("en-IN")}<br>
+    ✅ <strong>Swing Door Cost</strong>: ₹${swingDoorCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Extra Accessories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
+    ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
+    💰 <strong>Final Price</strong>: ₹${totalPrice.toLocaleString("en-IN")}<br>
+    ${amc === "yes" ? `✅ <strong>AMC Cost (${amcType})</strong>: ₹${amcCost.toLocaleString("en-IN")}` : ''}
+  `;
+});
+  </script>
 </body>
 </html>
