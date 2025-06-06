@@ -613,19 +613,19 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
   // Calculate Final Price
   const totalPrice = basePrice + totalAdditional - discount;
   const cost1 = doorCost * floorMultiplier
+  console.log({ basePrice, doorCost, totalAdditional, totalPrice, amc, amcType, amcCost });
   const resultDiv = document.getElementById('result');
-resultDiv.innerHTML = `
-  ✅ <strong>Base Price</strong>: ₹${basePrice.toLocaleString("en-IN")}<br>
-  ✅ <strong>Swing Door Cost</strong>: ₹${doorCost.toLocaleString("en-IN")} * ₹${floorMultiplier.toLocaleString("en-IN")} = ₹${cost1.toLocaleString("en-IN")}<br>
-  ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
-  ✅ <strong>Extra Accessories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
-  ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
-  ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
-  💰 <strong>Final Price</strong>: ₹${totalPrice.toLocaleString("en-IN")}<br>
-  ${amc === "yes" ? `✅ <strong>AMC Cost (${amcType})</strong>: ₹${amcCost.toLocaleString("en-IN")}` : ''}
-`;
-
-
+  resultDiv.innerHTML = `
+    ✅ <strong>Base Price</strong>: ₹${basePrice.toLocaleString("en-IN")}<br>
+    ✅ <strong>Swing Door Cost</strong>: ₹${doorCost.toLocaleString("en-IN")} * ₹${floorMultiplier.toLocaleString("en-IN")} = ₹${cost1.toLocaleString("en-IN")}<br>
+    ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Extra Accessories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
+    ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
+    💰 <strong>Final Price</strong>: ₹${totalPrice.toLocaleString("en-IN")}<br>
+    ${amc === "yes" ? `✅ <strong>AMC Cost (${amcType})</strong>: ₹${amcCost.toLocaleString("en-IN")}` : ''}
+  `;
+});
   </script>
 </body>
 </html>
