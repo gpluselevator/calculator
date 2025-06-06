@@ -612,11 +612,11 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
 
   // Calculate Final Price
   const totalPrice = basePrice + totalAdditional - discount;
-
+  const cost1 = doorCost * floorMultiplier
   const resultDiv = document.getElementById('result');
   resultDiv.innerHTML = `
-    ✅ <strong>Base Price</strong>: ₹${basePrice.toLocaleString("en-IN")}<br>
-    ✅ <strong>Swing Door Cost</strong>: ₹${swingDoorCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Base Price </strong>: ₹${basePrice.toLocaleString("en-IN")} * ₹${floorMultiplier} = ₹${cost1}<br>
+    ✅ <strong>Swing Door Cost/strong>: ₹${doorCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Extra Accessories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
