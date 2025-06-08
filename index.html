@@ -559,25 +559,25 @@ const amcPrices = {
 
 // AMC Cost Calculation
 document.getElementById('calculateBtn').addEventListener('click', function () {
-  const floorInput = document.getElementById('floors').value; // Get floors (G+1, G+2, etc.)
-  const size = document.getElementById('size').value; // Get size (3x3, 3.6x3.6, etc.)
-  const model = document.getElementById('model').value; // Get model (Classic/Ultra)
-  const type = document.getElementById('type').value; // Get door type (Manual/Auto)
-  const doorMaterial = document.getElementById('doorMaterial').value; // Get door material (ACP, Glass, etc.)
-  const amc = document.getElementById('amc').value.trim().toLowerCase(); // Get AMC selection (yes/no) and normalize
-  const amcType = document.getElementById('amc-type').value; // Get AMC type (Basic/Comprehensive)
+  const floorInput = document.getElementById('floors').value;
+  const size = document.getElementById('size').value;
+  const model = document.getElementById('model').value;
+  const type = document.getElementById('type').value;
+  const doorMaterial = document.getElementById('doorMaterial').value;
+  const amc = document.getElementById('amc').value.trim().toLowerCase();
+  const amcType = document.getElementById('amc-type').value;
 
-  // Debugging: Log values
+  // Debugging logs
   console.log("AMC:", amc);
   console.log("AMC Type:", amcType);
   console.log("Door Type:", type);
   console.log("Floors:", floorInput);
   console.log("Model:", model);
 
-  // Get base price from the prices object
+  // Get base price from object
   const basePrice = prices[floorInput][size][model][type][doorMaterial];
 
-  // Calculate Swing Door Cost (if applicable)
+  // Calculate Swing Door Cost (if manual)
   let swingDoorCost = 0;
   if (type === "Manual") {
     const door = document.getElementById('door').value;
@@ -591,11 +591,11 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
     swingDoorCost = doorCostMap[door] || 0;
   }
 
-  // Calculate Indoor/Outdoor Cost
+  // Indoor/Outdoor cost
   const location = document.getElementById('location').value;
   const outdoorCost = location === "Outdoor" ? 40000 : 0;
 
-  // Calculate Extra Accessories Cost
+  // Extra Accessories
   const additional = document.getElementById('additional').value;
   const accessoryCostMap = {
     none: 0,
@@ -606,7 +606,7 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
   };
   const additionalCost = accessoryCostMap[additional] || 0;
 
-  // Calculate Discount
+  // Discount based on model and floor
   let discount = 0;
   if (model === "Classic") {
     discount = { "G+1": 5000, "G+2": 10000, "G+3": 15000 }[floorInput] || 0;
@@ -614,26 +614,25 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
     discount = { "G+1": 10000, "G+2": 15000, "G+3": 20000 }[floorInput] || 0;
   }
 
-  // Calculate AMC Cost
+  // AMC Cost calculation
   let amcCost = 0;
   if (amc === "yes") {
-    // Debugging: Log AMC Prices
+    // Debug
     console.log("AMC Prices:", amcPrices[amcType][type][floorInput][model]);
-
-    // Ensure AMC Cost is calculated correctly
-    amcCost = amcPrices[amcType][type][floorInput][model] || 0; // Use fallback in case of undefined
+    amcCost = amcPrices?.[amcType]?.[type]?.[floorInput]?.[model] || 0;
   }
 
-  // Calculate Total Additional Cost
+  // Total additional costs
   const totalAdditional = swingDoorCost + outdoorCost + additionalCost;
 
-  // Calculate Final Price
+  // Final Price calculation
   const totalPrice = basePrice + totalAdditional - discount;
 
+  // Show results
   const resultDiv = document.getElementById('result');
   resultDiv.innerHTML = `
     ✅ <strong>Base Price</strong>: ₹${basePrice.toLocaleString("en-IN")}<br>
-    ✅ <strong>Swing Door Cost</strong>: ₹${doorCost.toLocaleString("en-IN")}<br>
+    ✅ <strong>Swing Door Cost</strong>: ₹${swingDoorCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Extra Accessories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
@@ -642,6 +641,4 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
     ${amc === "yes" ? `✅ <strong>AMC Cost (${amcType})</strong>: ₹${amcCost.toLocaleString("en-IN")}` : ''}
   `;
 });
-  </script>
-</body>
-</html>
+</script>
