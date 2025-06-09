@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Price Calculator</title>
     <link rel="stylesheet" href="styles.css">
-  <style>
+    <style>
     body {
       font-family: 'Roboto', sans-serif;
       margin: auto;
@@ -87,26 +87,39 @@
       margin-top: 1rem;
     }
 
-    /* Responsive adjustments */
+    /* Container for dropdowns */
+    .dropdowns-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
+    }
+
+    /* Each dropdown wrapper */
+    .dropdown-wrapper {
+      flex: 1 1 45%; /* roughly half width with some gap */
+      min-width: 280px; /* prevent too narrow on smaller screens */
+      box-sizing: border-box;
+    }
+
+    /* For the last dropdown (AMC Type container) which is inside a div */
+    #amc-type-container.dropdown-wrapper {
+      /* same styling as others */
+    }
+
+    /* On smaller screens, stack dropdowns */
     @media (max-width: 768px) {
-      body {
-        /* padding: 1.5rem 1rem; */
-      }
-
-      label {
-        font-size: 1rem;
-      }
-
-      select,
-      button {
-        font-size: 0.95rem;
-        padding: 9px 10px;
-      }
-
-      #result {
-        font-size: 0.95rem;
-        padding: 15px;
+      .dropdowns-container {
+        flex-direction: column;
+        gap: 1rem 0;
         max-width: 100%;
+      }
+      .dropdown-wrapper {
+        flex: 1 1 100%;
+        min-width: auto;
       }
     }
 
@@ -124,127 +137,124 @@
 </head>
 <body>
     <header>
-        <h1>Gplus Elevator - Price Calculator</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="https://gpluselevator.github.io/index.html">Home</a></li>
-            <li><a href="https://gpluselevator.github.io/videos.html">Videos</a></li>
-            <li><a href="https://gpluselevator.github.io/pictures.html">Pictures</a></li>
-            <li><a href="https://gpluselevator.github.io/quotation.html">Quotation</a></li>
-            <li><a href="https://gpluselevator.github.io/fabrication.html">Fabrication</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h3>Select the following:</h3>
+    <h1>Gplus Elevator - Price Calculator</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="https://gpluselevator.github.io/index.html">Home</a></li>
+      <li><a href="https://gpluselevator.github.io/videos.html">Videos</a></li>
+      <li><a href="https://gpluselevator.github.io/pictures.html">Pictures</a></li>
+      <li><a href="https://gpluselevator.github.io/quotation.html">Quotation</a></li>
+      <li><a href="https://gpluselevator.github.io/fabrication.html">Fabrication</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h3>Select the following:</h3>
 
-  <label for="floors">Floors:</label>
-  <select id="floors">
-    <option value="">-- Select --</option>
-    <option value="G+1">G+1</option>
-    <option value="G+2">G+2</option>
-    <option value="G+3">G+3</option>
-  </select>
+    <div class="dropdowns-container">
+      <div class="dropdown-wrapper">
+        <label for="floors">Floors:</label>
+        <select id="floors">
+          <option value="">-- Select --</option>
+          <option value="G+1">G+1</option>
+          <option value="G+2">G+2</option>
+          <option value="G+3">G+3</option>
+        </select>
+      </div>
 
-  <label for="size">Size:</label>
-  <select id="size">
-    <option value="">-- Select --</option>
-    <option value="3x3">3x3</option>
-    <option value="3.6x3.6">3.6x3.6</option>
-    <option value="4x4">4x4</option>
-  </select>
+      <div class="dropdown-wrapper">
+        <label for="size">Size:</label>
+        <select id="size">
+          <option value="">-- Select --</option>
+          <option value="3x3">3x3</option>
+          <option value="3.6x3.6">3.6x3.6</option>
+          <option value="4x4">4x4</option>
+        </select>
+      </div>
 
-  <label for="model">Model:</label>
-  <select id="model">
-    <option value="">-- Select --</option>
-    <option value="Classic">Classic</option>
-    <option value="Ultra">Ultra</option>
-  </select>
+      <div class="dropdown-wrapper">
+        <label for="model">Model:</label>
+        <select id="model">
+          <option value="">-- Select --</option>
+          <option value="Classic">Classic</option>
+          <option value="Ultra">Ultra</option>
+        </select>
+      </div>
 
-  <label for="type">Door Type:</label>
-  <select id="type">
-    <option value="">-- Select --</option>
-    <option value="Manual">Manual</option>
-    <option value="Auto">Auto</option>
-  </select>
+      <div class="dropdown-wrapper">
+        <label for="type">Door Type:</label>
+        <select id="type">
+          <option value="">-- Select --</option>
+          <option value="Manual">Manual</option>
+          <option value="Auto">Auto</option>
+        </select>
+      </div>
 
-  <label for="doorMaterial">Structure Enclosure:</label>
-  <select id="doorMaterial">
-    <option value="">-- Select --</option>
-    <option value="ACP">ACP</option>
-    <option value="Glass (1 Side)">Glass (1 Side)</option>
-    <option value="Glass (2 Side)">Glass (2 Side)</option>
-  </select>
+      <div class="dropdown-wrapper">
+        <label for="doorMaterial">Structure Enclosure:</label>
+        <select id="doorMaterial">
+          <option value="">-- Select --</option>
+          <option value="ACP">ACP</option>
+          <option value="Glass (1 Side)">Glass (1 Side)</option>
+          <option value="Glass (2 Side)">Glass (2 Side)</option>
+        </select>
+      </div>
 
-  <!-- Swing Door Type (only shown if type is Manual) -->
-  <div id="door-container">
-    <label for="door">Swing Door Type:</label>
-    <select id="door">
-      <option value="">None</option>
-      <option value="ms_half_vision">MS Half Vision</option>
-      <option value="ms_full_vision">MS Full Vision</option>
-      <option value="ss_half_vision">SS Half Vision</option>
-      <option value="ss_full_vision">SS Full Vision</option>
-    </select>
-  </div>
+      <div class="dropdown-wrapper" id="door-container">
+        <label for="door">Swing Door Type:</label>
+        <select id="door">
+          <option value="">None</option>
+          <option value="ms_half_vision">MS Half Vision</option>
+          <option value="ms_full_vision">MS Full Vision</option>
+          <option value="ss_half_vision">SS Half Vision</option>
+          <option value="ss_full_vision">SS Full Vision</option>
+        </select>
+      </div>
 
-  <label for="location">Location:</label>
-  <select id="location">
-    <option value="">-- Select --</option>
-    <option value="Indoor">Indoor</option>
-    <option value="Outdoor">Outdoor</option>
-  </select>
+      <div class="dropdown-wrapper">
+        <label for="location">Location:</label>
+        <select id="location">
+          <option value="">-- Select --</option>
+          <option value="Indoor">Indoor</option>
+          <option value="Outdoor">Outdoor</option>
+        </select>
+      </div>
 
-  <label for="additional">Extra Accessories:</label>
-  <select id="additional">
-    <option value="none">None</option>
-    <option value="rf_lop">RF (LOP) - ₹10,000</option>
-    <option value="rf_cop">RF (COP) - ₹15,000</option>
-    <option value="finger_lop">Fingerprint (LOP) - ₹15,000</option>
-    <option value="finger_cop">Fingerprint (COP) - ₹20,000</option>
-  </select>
+      <div class="dropdown-wrapper">
+        <label for="additional">Extra Accessories:</label>
+        <select id="additional">
+          <option value="none">None</option>
+          <option value="rf_lop">RF (LOP) - ₹10,000</option>
+          <option value="rf_cop">RF (COP) - ₹15,000</option>
+          <option value="finger_lop">Fingerprint (LOP) - ₹15,000</option>
+          <option value="finger_cop">Fingerprint (COP) - ₹20,000</option>
+        </select>
+      </div>
 
-<!-- AMC Dropdown -->
-<label for="amc">AMC (Annual Maintenance Contract):</label>
-<select id="amc">
-  <option value="no">No</option>
-  <option value="yes">Yes</option>
-</select>
+      <div class="dropdown-wrapper">
+        <label for="amc">AMC (Annual Maintenance Contract):</label>
+        <select id="amc">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
 
-<!-- AMC Type Dropdown (hidden by default) -->
-<div id="amc-type-container" style="display: none;">
-  <label for="amc-type">AMC Type:</label>
-  <select id="amc-type">
-    <option value="Basic">Basic</option>
-    <option value="Comprehensive">Comprehensive</option>
-  </select>
-</div>
+      <div class="dropdown-wrapper" id="amc-type-container" style="display: none;">
+        <label for="amc-type">AMC Type:</label>
+        <select id="amc-type">
+          <option value="Basic">Basic</option>
+          <option value="Comprehensive">Comprehensive</option>
+        </select>
+      </div>
+    </div>
 
-<!-- JavaScript to show/hide AMC Type Dropdown -->
-<script>
-  // Show/hide AMC Type Dropdown based on AMC selection
-  document.getElementById('amc').addEventListener('change', function () {
-    const amcTypeContainer = document.getElementById('amc-type-container');
-    if (this.value === 'yes') {
-      amcTypeContainer.style.display = 'block'; // Show AMC Type Dropdown
-    } else {
-      amcTypeContainer.style.display = 'none'; // Hide AMC Type Dropdown
-    }
-  });
-</script>
+    <button id="calculateBtn">Calculate Price</button>
 
-
-
-  <br /><br />
-  <button id="calculateBtn">Calculate Price</button>
-
-  <div id="result" style="display: none; margin-top: 20px;"></div>
-
-  
-    </main>
-    <footer>
-        <p>&copy; 2025 Gplus Elevator. All Rights Reserved.</p>
-    </footer>
+    <div id="result" style="display: none; margin-top: 20px;"></div>
+  </main>
+  <footer>
+    <p>&copy; 2025 Gplus Elevator. All Rights Reserved.</p>
+  </footer>
 
   <script>
     // Show/hide Swing Door Type if Manual is selected
@@ -555,6 +565,9 @@ if (!floorInput || !size || !model || !type || !location || additional === "" ||
     ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
     ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
   `;
+
+  // Scroll to the result div smoothly
+  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 
@@ -727,5 +740,8 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
     💰 <strong>Final Price</strong>: ₹${totalPrice.toLocaleString("en-IN")}<br>
     ${amc === "yes" ? `✅ <strong>AMC Cost (${amcType})</strong>: ₹${amcCost.toLocaleString("en-IN")}` : ''}
   `;
+
+  // Scroll to the result div smoothly
+  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 </script>
