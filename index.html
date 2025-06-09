@@ -7,34 +7,118 @@
     <link rel="stylesheet" href="styles.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
+      font-family: 'Roboto', sans-serif;
       margin: auto;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      animation: fadeIn 1s ease-in-out;
     }
 
     label {
-      font-weight: bold;
-      margin-top: 15px;
+      font-weight: 600;
+      margin-top: 1rem;
       display: block;
+      color: #1e2a47;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
     }
 
-    select, button {
+    select,
+    button {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1.5px solid #1e2a47;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: 'Roboto', sans-serif;
+      color: #1e2a47;
+      background-color: #fff;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    select:focus,
+    button:focus {
+      outline: none;
+      border-color: #3a6ea5;
+      box-shadow: 0 0 8px rgba(58, 110, 165, 0.5);
+    }
+
+    button {
+      background-color: #1e2a47;
+      color: white;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+      margin-top: 2rem;
+    }
+
+    button:hover {
+      background-color: #3a6ea5;
+      transform: translateY(-3px);
     }
 
     #result {
-      margin-top: 20px;
-      padding: 15px;
-      border: 1px solid #ccc;
-      background-color: #f9f9f9;
+      margin-top: 2rem;
+      padding: 20px;
+      border: 1.5px solid #1e2a47;
+      background-color: #f2f2f2;
+      color: #1e2a47;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(30, 42, 71, 0.1);
+      animation: fadeIn 1s ease-in-out;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.4;
     }
 
     #door-container {
       display: none;
-      margin-top: 10px;
+      margin-top: 1rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body {
+        /* padding: 1.5rem 1rem; */
+      }
+
+      label {
+        font-size: 1rem;
+      }
+
+      select,
+      button {
+        font-size: 0.95rem;
+        padding: 9px 10px;
+      }
+
+      #result {
+        font-size: 0.95rem;
+        padding: 15px;
+        max-width: 100%;
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -154,7 +238,7 @@
   <br /><br />
   <button id="calculateBtn">Calculate Price</button>
 
-  <div id="result" style="margin-top: 20px;"></div>
+  <div id="result" style="display: none; margin-top: 20px;"></div>
 
   
     </main>
@@ -461,6 +545,7 @@ if (!floorInput || !size || !model || !type || !location || additional === "" ||
   const finalPrice = totalBeforeDiscount - discount;
 
   // Result Output
+  resultDiv.style.display = 'block';
   resultDiv.innerHTML = `
     ✅ <strong>Base Price</strong>: ₹
     ${basePrice.toLocaleString("en-IN")}<br>
@@ -631,6 +716,7 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
 
   // Show results
   const resultDiv = document.getElementById('result');
+  resultDiv.style.display = 'block';
   resultDiv.innerHTML = `
     ✅ <strong>Base Price</strong>: ₹${basePrice.toLocaleString("en-IN")}<br>
     ✅ <strong>Swing Door Cost</strong>: ₹${swingDoorCost.toLocaleString("en-IN")}<br>
