@@ -562,7 +562,7 @@ if (!floorInput || !size || !model || !type || !location || additional === "" ||
     ✅ <strong>Swing Door Cost</strong>: ₹${doorCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Extra Accesories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
-    ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
+    ➖ <i style="color: red;">Discount for Selected Model</i>: ₹${discount.toLocaleString("en-IN")}<br>
     ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
   `;
 
@@ -735,7 +735,7 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
     ✅ <strong>Swing Door Cost</strong>: ₹${swingDoorCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
     ✅ <strong>Extra Accessories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
-    ✅ <strong>Discount for Selected Model</strong>: ₹${discount.toLocaleString("en-IN")}<br>
+    ➖ <i style="color: red;">Discount for Selected Model</i>: ₹${discount.toLocaleString("en-IN")}<br>
     ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
     💰 <strong>Final Price</strong>: ₹${totalPrice.toLocaleString("en-IN")}<br>
     ${amc === "yes" ? `✅ <strong>AMC Cost (${amcType})</strong>: ₹${amcCost.toLocaleString("en-IN")}` : ''}
