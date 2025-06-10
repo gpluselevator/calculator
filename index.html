@@ -231,31 +231,58 @@
         </select>
       </div>
 
- <div class="dropdown-wrapper">
-  <label for="amc">AMC (Annual Maintenance Contract):</label>
-  <select id="amc" onchange="toggleAMCTypeContainer()">
-    <option value="no">No</option>
-    <option value="yes">Yes</option>
-  </select>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMC Dropdown Example</title>
+  <style>
+    .dropdown-wrapper {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="dropdown-wrapper">
+    <label for="amc">AMC (Annual Maintenance Contract):</label>
+    <select id="amc">
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+  </div>
 
-<div class="dropdown-wrapper" id="amc-type-container" style="display: none;">
-  <label for="amc-type">AMC Type:</label>
-  <select id="amc-type">
-    <option value="Basic">Basic</option>
-    <option value="Comprehensive">Comprehensive</option>
-  </select>
-</div>
-function toggleAMCTypeContainer() {
-  const amcSelect = document.getElementById('amc');
-  const amcTypeContainer = document.getElementById('amc-type-container');
+  <div class="dropdown-wrapper" id="amc-type-container" style="display: none;">
+    <label for="amc-type">AMC Type:</label>
+    <select id="amc-type">
+      <option value="Basic">Basic</option>
+      <option value="Comprehensive">Comprehensive</option>
+    </select>
+  </div>
 
-  if (amcSelect.value === 'yes') {
-    amcTypeContainer.style.display = 'block';
-  } else {
-    amcTypeContainer.style.display = 'none';
-  }
-}
+  <script>
+    // Function to toggle the visibility of the AMC Type container
+    function toggleAMCTypeContainer() {
+      const amcSelect = document.getElementById('amc');
+      const amcTypeContainer = document.getElementById('amc-type-container');
+
+      if (amcSelect.value === 'yes') {
+        amcTypeContainer.style.display = 'block';
+      } else {
+        amcTypeContainer.style.display = 'none';
+      }
+    }
+
+    // Add event listener to the AMC select element
+    document.getElementById('amc').addEventListener('change', toggleAMCTypeContainer);
+
+    // Initialize the AMC Type container visibility based on the initial value
+    toggleAMCTypeContainer();
+  </script>
+</body>
+</html>
+
+
     <button id="calculateBtn">Calculate Price</button>
 
     <div id="result" style="display: none; margin-top: 20px;"></div>
