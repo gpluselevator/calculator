@@ -231,9 +231,9 @@
         </select>
       </div>
 
-      <div class="dropdown-wrapper">
+ <div class="dropdown-wrapper">
   <label for="amc">AMC (Annual Maintenance Contract):</label>
-  <select id="amc">
+  <select id="amc" onchange="toggleAMCTypeContainer()">
     <option value="no">No</option>
     <option value="yes">Yes</option>
   </select>
@@ -246,8 +246,16 @@
     <option value="Comprehensive">Comprehensive</option>
   </select>
 </div>
+function toggleAMCTypeContainer() {
+  const amcSelect = document.getElementById('amc');
+  const amcTypeContainer = document.getElementById('amc-type-container');
 
-
+  if (amcSelect.value === 'yes') {
+    amcTypeContainer.style.display = 'block';
+  } else {
+    amcTypeContainer.style.display = 'none';
+  }
+}
     <button id="calculateBtn">Calculate Price</button>
 
     <div id="result" style="display: none; margin-top: 20px;"></div>
