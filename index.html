@@ -6,134 +6,200 @@
     <title>Price Calculator</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: auto;
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    label {
-      font-weight: 600;
-      margin-top: 1rem;
-      display: block;
-      color: #1e2a47;
-      letter-spacing: 0.5px;
-      transition: color 0.3s ease;
-    }
-
-    select,
-    button {
-      width: 100%;
-      padding: 10px 12px;
-      margin-top: 6px;
-      border: 1.5px solid #1e2a47;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-family: 'Roboto', sans-serif;
-      color: #1e2a47;
-      background-color: #fff;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      box-shadow: none;
-    }
-
-    select:focus,
-    button:focus {
-      outline: none;
-      border-color: #3a6ea5;
-      box-shadow: 0 0 8px rgba(58, 110, 165, 0.5);
-    }
-
-    button {
-      background-color: #1e2a47;
-      color: white;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-      margin-top: 2rem;
-    }
-
-    button:hover {
-      background-color: #3a6ea5;
-      transform: translateY(-3px);
-    }
-
-    #result {
-      margin-top: 2rem;
-      padding: 20px;
-      border: 1.5px solid #1e2a47;
-      background-color: #f2f2f2;
-      color: #1e2a47;
-      font-weight: 600;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(30, 42, 71, 0.1);
-      animation: fadeIn 1s ease-in-out;
-      text-align: left;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.4;
-    }
-
-    #door-container {
-      display: none;
-      margin-top: 0rem;
-    }
-
-    /* Container for dropdowns */
-    .dropdowns-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem 2rem;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-      justify-content: center;
-    }
-
-    /* Each dropdown wrapper */
-    .dropdown-wrapper {
-      flex: 1 1 45%; /* roughly half width with some gap */
-      min-width: 280px; /* prevent too narrow on smaller screens */
-      box-sizing: border-box;
-    }
-
-    /* For the last dropdown (AMC Type container) which is inside a div */
-    #amc-type-container.dropdown-wrapper {
-      /* same styling as others */
-    }
-
-    /* On smaller screens, stack dropdowns */
-    @media (max-width: 768px) {
-      .dropdowns-container {
+      body {
+        font-family: 'Roboto', sans-serif;
+        margin: auto;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+        display: flex;
         flex-direction: column;
-        gap: 1rem 0;
-        max-width: 100%;
+        min-height: 100vh;
+        animation: fadeIn 1s ease-in-out;
       }
-      .dropdown-wrapper {
-        flex: 1 1 100%;
-        min-width: auto;
-      }
-    }
 
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(10px);
+      label {
+        font-weight: 600;
+        margin-top: 1rem;
+        display: block;
+        color: #1e2a47;
+        letter-spacing: 0.5px;
+        transition: color 0.3s ease;
       }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
+
+      select,
+      button {
+        width: 100%;
+        padding: 10px 12px;
+        margin-top: 6px;
+        border: 1.5px solid #1e2a47;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
+        color: #1e2a47;
+        background-color: #fff;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        box-shadow: none;
       }
-    }
-  </style>
+
+      select:focus,
+      button:focus {
+        outline: none;
+        border-color: #3a6ea5;
+        box-shadow: 0 0 8px rgba(58, 110, 165, 0.5);
+      }
+
+      button {
+        background-color: #1e2a47;
+        color: white;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        margin-top: 2rem;
+      }
+
+      button:hover {
+        background-color: #3a6ea5;
+        transform: translateY(-3px);
+      }
+
+      #result {
+        margin-top: 2rem;
+        padding: 20px;
+        border: 1.5px solid #1e2a47;
+        background-color: #f2f2f2;
+        color: #1e2a47;
+        font-weight: 600;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(30, 42, 71, 0.1);
+        animation: fadeIn 1s ease-in-out;
+        text-align: left;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.4;
+      }
+
+      #door-container {
+        display: none;
+        margin-top: 0rem;
+      }
+
+      /* Container for dropdowns */
+      .dropdowns-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem 2rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+      }
+
+      /* Each dropdown wrapper */
+      .dropdown-wrapper {
+        flex: 1 1 45%; /* roughly half width with some gap */
+        min-width: 280px; /* prevent too narrow on smaller screens */
+        box-sizing: border-box;
+      }
+
+      /* For the last dropdown (AMC Type container) which is inside a div */
+      #amc-type-container.dropdown-wrapper {
+        /* same styling as others */
+      }
+
+      /* On smaller screens, stack dropdowns */
+      @media (max-width: 768px) {
+        .dropdowns-container {
+          flex-direction: column;
+          gap: 1rem 0;
+          max-width: 100%;
+        }
+        .dropdown-wrapper {
+          flex: 1 1 100%;
+          min-width: auto;
+        }
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Preset Buttons Container */
+      #preset-buttons-container {
+        max-width: 900px;
+        margin: 1rem auto;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      /* Preset Buttons styled to match Calculate Price button */
+      #preset-buttons-container button.preset-btn {
+        flex: 1 1 30%;
+        min-width: 150px;
+        padding: 10px 15px;
+        font-weight: 600;
+        font-family: 'Roboto', sans-serif;
+        cursor: pointer;
+        border-radius: 6px;
+        border: 1.5px solid #1e2a47;
+        box-shadow: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        background-color: #1e2a47;
+        color: white;
+        transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+      }
+
+      #preset-buttons-container button.preset-btn:hover,
+      #preset-buttons-container button.preset-btn:focus {
+        background-color: #3a6ea5;
+        color: white;
+        outline: none;
+        transform: translateY(-3px);
+        box-shadow: none;
+      }
+
+      /* Responsive stacking on small screens */
+      @media (max-width: 768px) {
+        #preset-buttons-container {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        #preset-buttons-container button.preset-btn {
+          flex: 1 1 100%;
+          min-width: auto;
+        }
+      }
+
+      /* Highlight effect for calculate button */
+      @keyframes highlightPulse {
+        0%, 100% {
+          box-shadow: 0 0 8px 2px #3a6ea5;
+          transform: translateY(0);
+        }
+        50% {
+          box-shadow: 0 0 12px 4px #3a6ea5;
+          transform: translateY(-3px);
+        }
+      }
+
+      #calculateBtn.highlight {
+        animation: highlightPulse 1.5s ease-in-out 3;
+      }
+    </style>
 </head>
 <body>
     <header>
@@ -149,6 +215,9 @@
     </ul>
   </nav>
   <main>
+
+    <div id="preset-buttons-container"></div>
+
     <h3>Select the following:</h3>
 
     <div class="dropdowns-container">
@@ -200,6 +269,15 @@
         </select>
       </div>
 
+      <div class="dropdown-wrapper">
+        <label for="location">Location:</label>
+        <select id="location">
+          <option value="">-- Select --</option>
+          <option value="Indoor">Indoor</option>
+          <option value="Outdoor">Outdoor</option>
+        </select>
+      </div>
+
       <div class="dropdown-wrapper" id="door-container">
         <label for="door">Swing Door Type:</label>
         <select id="door">
@@ -208,15 +286,6 @@
           <option value="ms_full_vision">MS Full Vision</option>
           <option value="ss_half_vision">SS Half Vision</option>
           <option value="ss_full_vision">SS Full Vision</option>
-        </select>
-      </div>
-
-      <div class="dropdown-wrapper">
-        <label for="location">Location:</label>
-        <select id="location">
-          <option value="">-- Select --</option>
-          <option value="Indoor">Indoor</option>
-          <option value="Outdoor">Outdoor</option>
         </select>
       </div>
 
@@ -292,6 +361,90 @@
   </footer>
 
   <script>
+
+    // Preset button configurations
+  const presetButtonsData = [
+    {
+      label: "Preset 1",
+      floors: "G+1",
+      size: "3x3",
+      model: "Classic",
+      doorType: "Manual",
+      doorMaterial: "ACP",
+      location: "Indoor"
+    },
+    {
+      label: "Preset 2",
+      floors: "G+1",
+      size: "3.6x3.6",
+      model: "Classic",
+      doorType: "Manual",
+      doorMaterial: "ACP",
+      location: "Indoor"
+    },
+    {
+      label: "Preset 3",
+      floors: "G+1",
+      size: "4x4",
+      model: "Classic",
+      doorType: "Manual",
+      doorMaterial: "ACP",
+      location: "Indoor"
+    },
+    {
+      label: "Preset 4",
+      floors: "G+1",
+      size: "4x4",
+      model: "Classic",
+      doorType: "Auto",
+      doorMaterial: "ACP",
+      location: "Indoor"
+    }
+  ];
+
+  const container = document.getElementById('preset-buttons-container');
+
+  // Create buttons dynamically
+  presetButtonsData.forEach(preset => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'preset-btn';
+    btn.textContent = preset.label;
+
+    btn.addEventListener('click', () => {
+      // Populate form fields
+      document.getElementById('floors').value = preset.floors;
+      document.getElementById('size').value = preset.size;
+
+      // Trigger change event on size to update door type options and door container visibility
+      const sizeSelect = document.getElementById('size');
+      sizeSelect.dispatchEvent(new Event('change'));
+
+      document.getElementById('model').value = preset.model;
+      document.getElementById('type').value = preset.doorType;
+
+      // Trigger change event on type to show/hide door container
+      const typeSelect = document.getElementById('type');
+      typeSelect.dispatchEvent(new Event('change'));
+
+      document.getElementById('doorMaterial').value = preset.doorMaterial;
+      document.getElementById('location').value = preset.location;
+
+      // Scroll to calculate button and highlight it
+      const calculateBtn = document.getElementById('calculateBtn');
+      calculateBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      calculateBtn.classList.add('highlight');
+      setTimeout(() => {
+        calculateBtn.classList.remove('highlight');
+      }, 4500);
+    });
+
+    container.appendChild(btn);
+  });
+
+
+
     // Show/hide Swing Door Type if Manual is selected
     
     const prices = {
