@@ -1,208 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Price Calculator</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-      body {
-        font-family: 'Roboto', sans-serif;
-        margin: auto;
-        background-color: #f9f9f9;
-        color: #333;
-        line-height: 1.6;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        animation: fadeIn 1s ease-in-out;
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Price Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: auto;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      animation: fadeIn 1s ease-in-out;
+    }
 
-      label {
-        font-weight: 600;
-        margin-top: 1rem;
-        display: block;
-        color: #1e2a47;
-        letter-spacing: 0.5px;
-        transition: color 0.3s ease;
-      }
+    label {
+      font-weight: 600;
+      margin-top: 1rem;
+      display: block;
+      color: #1e2a47;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
 
-      select,
-      button {
-        width: 100%;
-        padding: 10px 12px;
-        margin-top: 6px;
-        border: 1.5px solid #1e2a47;
-        border-radius: 6px;
-        font-size: 1rem;
-        font-family: 'Roboto', sans-serif;
-        color: #1e2a47;
-        background-color: #fff;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-        box-shadow: none;
-      }
+    select,
+    button {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1.5px solid #1e2a47;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: 'Roboto', sans-serif;
+      color: #1e2a47;
+      background-color: #fff;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      box-shadow: none;
+    }
 
-      select:focus,
-      button:focus {
-        outline: none;
-        border-color: #3a6ea5;
-        box-shadow: 0 0 8px rgba(58, 110, 165, 0.5);
-      }
+    select:focus,
+    button:focus {
+      outline: none;
+      border-color: #3a6ea5;
+      box-shadow: 0 0 8px rgba(58, 110, 165, 0.5);
+    }
 
-      button {
-        background-color: #1e2a47;
-        color: white;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-        margin-top: 2rem;
-      }
+    button {
+      background-color: #1e2a47;
+      color: white;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+      margin-top: 2rem;
+    }
 
-      button:hover {
-        background-color: #3a6ea5;
-        transform: translateY(-3px);
-      }
+    button:hover {
+      background-color: #3a6ea5;
+      transform: translateY(-3px);
+    }
 
-      #result {
-        margin-top: 2rem;
-        padding: 20px;
-        border: 1.5px solid #1e2a47;
-        background-color: #f2f2f2;
-        color: #1e2a47;
-        font-weight: 600;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(30, 42, 71, 0.1);
-        animation: fadeIn 1s ease-in-out;
-        text-align: left;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        line-height: 1.4;
-      }
+    #result {
+      margin-top: 2rem;
+      padding: 20px;
+      border: 1.5px solid #1e2a47;
+      background-color: #f2f2f2;
+      color: #1e2a47;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(30, 42, 71, 0.1);
+      animation: fadeIn 1s ease-in-out;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.4;
+    }
 
-      #door-container {
-        display: none;
-        margin-top: 0rem;
-      }
+    #door-container {
+      display: none;
+      margin-top: 0rem;
+    }
 
-      /* Container for dropdowns */
+    /* Container for dropdowns */
+    .dropdowns-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
+    }
+
+    /* Each dropdown wrapper */
+    .dropdown-wrapper {
+      flex: 1 1 45%; /* roughly half width with some gap */
+      min-width: 280px; /* prevent too narrow on smaller screens */
+      box-sizing: border-box;
+    }
+
+    .required-dropdowns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2rem;
+      width: 100%;
+      border: 2px solid #1e2a47;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    /* For the last dropdown (AMC Type container) which is inside a div */
+    #amc-type-container.dropdown-wrapper {
+      /* same styling as others */
+    }
+
+    /* On smaller screens, stack dropdowns */
+    @media (max-width: 768px) {
       .dropdowns-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.5rem 2rem;
-        max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-        justify-content: center;
+        flex-direction: column;
+        gap: 1rem 0;
+        max-width: 100%;
       }
-
-      /* Each dropdown wrapper */
       .dropdown-wrapper {
-        flex: 1 1 45%; /* roughly half width with some gap */
-        min-width: 280px; /* prevent too narrow on smaller screens */
-        box-sizing: border-box;
+        flex: 1 1 100%;
+        min-width: auto;
       }
+    }
 
-      /* For the last dropdown (AMC Type container) which is inside a div */
-      #amc-type-container.dropdown-wrapper {
-        /* same styling as others */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
       }
-
-      /* On smaller screens, stack dropdowns */
-      @media (max-width: 768px) {
-        .dropdowns-container {
-          flex-direction: column;
-          gap: 1rem 0;
-          max-width: 100%;
-        }
-        .dropdown-wrapper {
-          flex: 1 1 100%;
-          min-width: auto;
-        }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
       }
+    }
 
-      @keyframes fadeIn {
-        0% {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+    /* Preset Buttons Container */
+    #preset-buttons-container {
+      max-width: 900px;
+      margin: 1rem auto;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-      /* Preset Buttons Container */
+    /* Preset Buttons styled to match Calculate Price button */
+    #preset-buttons-container button.preset-btn {
+      flex: 1 1 30%;
+      min-width: 150px;
+      padding: 10px 15px;
+      font-weight: 600;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1.5px solid #1e2a47;
+      box-shadow: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      background-color: #1e2a47;
+      color: white;
+      transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+    }
+
+    #preset-buttons-container button.preset-btn:hover,
+    #preset-buttons-container button.preset-btn:focus {
+      background-color: #3a6ea5;
+      color: white;
+      outline: none;
+      transform: translateY(-3px);
+      box-shadow: none;
+    }
+
+    /* Responsive stacking on small screens */
+    @media (max-width: 768px) {
       #preset-buttons-container {
-        max-width: 900px;
-        margin: 1rem auto;
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 0.75rem;
       }
-
-      /* Preset Buttons styled to match Calculate Price button */
       #preset-buttons-container button.preset-btn {
-        flex: 1 1 30%;
-        min-width: 150px;
-        padding: 10px 15px;
-        font-weight: 600;
-        font-family: 'Roboto', sans-serif;
-        cursor: pointer;
-        border-radius: 6px;
-        border: 1.5px solid #1e2a47;
-        box-shadow: none;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-
-        background-color: #1e2a47;
-        color: white;
-        transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        flex: 1 1 100%;
+        min-width: auto;
       }
+    }
 
-      #preset-buttons-container button.preset-btn:hover,
-      #preset-buttons-container button.preset-btn:focus {
-        background-color: #3a6ea5;
-        color: white;
-        outline: none;
+    /* Highlight effect for calculate button */
+    @keyframes highlightPulse {
+      0%,
+      100% {
+        box-shadow: 0 0 8px 2px #3a6ea5;
+        transform: translateY(0);
+      }
+      50% {
+        box-shadow: 0 0 12px 4px #3a6ea5;
         transform: translateY(-3px);
-        box-shadow: none;
       }
+    }
 
-      /* Responsive stacking on small screens */
-      @media (max-width: 768px) {
-        #preset-buttons-container {
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-        #preset-buttons-container button.preset-btn {
-          flex: 1 1 100%;
-          min-width: auto;
-        }
-      }
+    #calculateBtn.highlight {
+      animation: highlightPulse 1.5s ease-in-out 3;
+    }
 
-      /* Highlight effect for calculate button */
-      @keyframes highlightPulse {
-        0%, 100% {
-          box-shadow: 0 0 8px 2px #3a6ea5;
-          transform: translateY(0);
-        }
-        50% {
-          box-shadow: 0 0 12px 4px #3a6ea5;
-          transform: translateY(-3px);
-        }
-      }
-
-      #calculateBtn.highlight {
-        animation: highlightPulse 1.5s ease-in-out 3;
-      }
-    </style>
+    .highlight-pulse {
+    animation: highlightPulse 1.5s ease-in-out 3;
+    border-color: #ff0800 !important; /* red border to indicate error */
+    box-shadow: 0 0 8px 2px #d9534f !important;
+  }
+  </style>
 </head>
 <body>
-    <header>
+  <header>
     <h1>Gplus Elevator - Price Calculator</h1>
   </header>
   <nav>
@@ -215,12 +232,12 @@
     </ul>
   </nav>
   <main>
-
     <div id="preset-buttons-container"></div>
 
     <h3>Select the following:</h3>
 
     <div class="dropdowns-container">
+      <div class="required-dropdowns">
       <div class="dropdown-wrapper">
         <label for="floors">Floors:</label>
         <select id="floors">
@@ -277,6 +294,7 @@
           <option value="Outdoor">Outdoor</option>
         </select>
       </div>
+      </div>
 
       <div class="dropdown-wrapper" id="door-container">
         <label for="door">Swing Door Type:</label>
@@ -300,57 +318,23 @@
         </select>
       </div>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AMC Dropdown Example</title>
-  <style>
-    .dropdown-wrapper {
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
-  <div class="dropdown-wrapper">
-    <label for="amc">AMC (Annual Maintenance Contract):</label>
-    <select id="amc">
-      <option value="no">No</option>
-      <option value="yes">Yes</option>
-    </select>
-  </div>
+      <!-- AMC Dropdown Section -->
+      <div class="dropdown-wrapper">
+        <label for="amc">AMC (Annual Maintenance Contract):</label>
+        <select id="amc">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
 
-  <div class="dropdown-wrapper" id="amc-type-container" style="display: none;">
-    <label for="amc-type">AMC Type:</label>
-    <select id="amc-type">
-      <option value="Basic">Basic</option>
-      <option value="Comprehensive">Comprehensive</option>
-    </select>
-  </div>
-
-  <script>
-    // Function to toggle the visibility of the AMC Type container
-    function toggleAMCTypeContainer() {
-      const amcSelect = document.getElementById('amc');
-      const amcTypeContainer = document.getElementById('amc-type-container');
-
-      if (amcSelect.value === 'yes') {
-        amcTypeContainer.style.display = 'block';
-      } else {
-        amcTypeContainer.style.display = 'none';
-      }
-    }
-
-    // Add event listener to the AMC select element
-    document.getElementById('amc').addEventListener('change', toggleAMCTypeContainer);
-
-    // Initialize the AMC Type container visibility based on the initial value
-    toggleAMCTypeContainer();
-  </script>
-</body>
-</html>
-
+      <div class="dropdown-wrapper" id="amc-type-container" style="display: none;">
+        <label for="amc-type">AMC Type:</label>
+        <select id="amc-type">
+          <option value="Basic">Basic</option>
+          <option value="Comprehensive">Comprehensive</option>
+        </select>
+      </div>
+    </div>
 
     <button id="calculateBtn">Calculate Price</button>
 
@@ -361,8 +345,24 @@
   </footer>
 
   <script>
+  // Function to toggle the visibility of the AMC Type container
+  function toggleAMCTypeContainer() {
+    const amcSelect = document.getElementById('amc');
+    const amcTypeContainer = document.getElementById('amc-type-container');
 
-    // Preset button configurations
+    if (amcSelect.value === 'yes') {
+      amcTypeContainer.style.display = 'block';
+    } else {
+      amcTypeContainer.style.display = 'none';
+    }
+  }
+
+  // Add event listener to the AMC select element
+  document.getElementById('amc').addEventListener('change', toggleAMCTypeContainer);
+
+  // Initialize the AMC Type container visibility based on the initial value
+  toggleAMCTypeContainer();
+
   const presetButtonsData = [
     {
       label: "Preset 1",
@@ -371,7 +371,7 @@
       model: "Classic",
       doorType: "Manual",
       doorMaterial: "ACP",
-      location: "Indoor"
+      location: "Indoor",
     },
     {
       label: "Preset 2",
@@ -380,7 +380,7 @@
       model: "Classic",
       doorType: "Manual",
       doorMaterial: "ACP",
-      location: "Indoor"
+      location: "Indoor",
     },
     {
       label: "Preset 3",
@@ -389,7 +389,7 @@
       model: "Classic",
       doorType: "Manual",
       doorMaterial: "ACP",
-      location: "Indoor"
+      location: "Indoor",
     },
     {
       label: "Preset 4",
@@ -398,14 +398,23 @@
       model: "Classic",
       doorType: "Auto",
       doorMaterial: "ACP",
-      location: "Indoor"
-    }
+      location: "Indoor",
+    },
+    {
+      label: "Preset 5",
+      floors: "G+1",
+      size: "3.6x3.6",
+      model: "Classic",
+      doorType: "Auto",
+      doorMaterial: "ACP",
+      location: "Indoor",
+    },
   ];
 
   const container = document.getElementById('preset-buttons-container');
 
   // Create buttons dynamically
-  presetButtonsData.forEach(preset => {
+  presetButtonsData.forEach((preset) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'preset-btn';
@@ -443,494 +452,445 @@
     container.appendChild(btn);
   });
 
-
-
-    // Show/hide Swing Door Type if Manual is selected
-    
-    const prices = {
-  "G+1": {
-    "3x3": {
-      "Classic": {
-        "Manual": {
-          "ACP": 500000,
-          "Glass (1 Side)": 550000,
-          "Glass (2 Side)": 580000
+  // Show/hide Swing Door Type if Manual is selected
+  const prices = {
+    "G+1": {
+      "3x3": {
+        Classic: {
+          Manual: {
+            ACP: 500000,
+            "Glass (1 Side)": 550000,
+            "Glass (2 Side)": 580000,
+          },
+          Auto: {},
         },
-        "Auto": {}
+        Ultra: {
+          Manual: {
+            ACP: 570000,
+            "Glass (1 Side)": 620000,
+            "Glass (2 Side)": 650000,
+          },
+          Auto: {},
+        },
       },
-      "Ultra": {
-        "Manual": {
-          "ACP": 570000,
-          "Glass (1 Side)": 620000,
-          "Glass (2 Side)": 650000
+      "3.6x3.6": {
+        Classic: {
+          Manual: {
+            ACP: 540000,
+            "Glass (1 Side)": 600000,
+            "Glass (2 Side)": 630000,
+          },
+          Auto: {
+            ACP: 640000,
+            "Glass (1 Side)": 700000,
+            "Glass (2 Side)": 730000,
+          },
         },
-        "Auto": {}
-      }
+        Ultra: {
+          Manual: {
+            ACP: 620000,
+            "Glass (1 Side)": 680000,
+            "Glass (2 Side)": 710000,
+          },
+          Auto: {
+            ACP: 720000,
+            "Glass (1 Side)": 780000,
+            "Glass (2 Side)": 810000,
+          },
+        },
+      },
+      "4x4": {
+        Classic: {
+          Manual: {
+            ACP: 570000,
+            "Glass (1 Side)": 640000,
+            "Glass (2 Side)": 670000,
+          },
+          Auto: {
+            ACP: 680000,
+            "Glass (1 Side)": 750000,
+            "Glass (2 Side)": 780000,
+          },
+        },
+        Ultra: {
+          Manual: {
+            ACP: 660000,
+            "Glass (1 Side)": 730000,
+            "Glass (2 Side)": 760000,
+          },
+          Auto: {
+            ACP: 770000,
+            "Glass (1 Side)": 840000,
+            "Glass (2 Side)": 870000,
+          },
+        },
+      },
     },
-    "3.6x3.6": {
-      "Classic": {
-        "Manual": {
-          "ACP": 540000,
-          "Glass (1 Side)": 600000,
-          "Glass (2 Side)": 630000
+    "G+2": {
+      "3x3": {
+        Classic: {
+          Manual: {
+            ACP: 570000,
+            "Glass (1 Side)": 650000,
+            "Glass (2 Side)": 680000,
+          },
+          Auto: {},
         },
-        "Auto": {
-          "ACP": 640000,
-          "Glass (1 Side)": 700000,
-          "Glass (2 Side)": 730000
-        }
+        Ultra: {
+          Manual: {
+            ACP: 640000,
+            "Glass (1 Side)": 720000,
+            "Glass (2 Side)": 750000,
+          },
+          Auto: {},
+        },
       },
-      "Ultra": {
-        "Manual": {
-          "ACP": 620000,
-          "Glass (1 Side)": 680000,
-          "Glass (2 Side)": 710000
+      "3.6x3.6": {
+        Classic: {
+          Manual: {
+            ACP: 610000,
+            "Glass (1 Side)": 700000,
+            "Glass (2 Side)": 730000,
+          },
+          Auto: {
+            ACP: 700000,
+            "Glass (1 Side)": 790000,
+            "Glass (2 Side)": 820000,
+          },
         },
-        "Auto": {
-          "ACP": 720000,
-          "Glass (1 Side)": 780000,
-          "Glass (2 Side)": 810000
-        }
-      }
+        Ultra: {
+          Manual: {
+            ACP: 610000,
+            "Glass (1 Side)": 700000,
+            "Glass (2 Side)": 730000,
+          },
+          Auto: {
+            ACP: 700000,
+            "Glass (1 Side)": 790000,
+            "Glass (2 Side)": 820000,
+          },
+        },
+      },
+      "4x4": {
+        Classic: {
+          Manual: {
+            ACP: 660000,
+            "Glass (1 Side)": 760000,
+            "Glass (2 Side)": 780000,
+          },
+          Auto: {
+            ACP: 750000,
+            "Glass (1 Side)": 850000,
+            "Glass (2 Side)": 870000,
+          },
+        },
+        Ultra: {
+          Manual: {
+            ACP: 750000,
+            "Glass (1 Side)": 850000,
+            "Glass (2 Side)": 870000,
+          },
+          Auto: {
+            ACP: 840000,
+            "Glass (1 Side)": 940000,
+            "Glass (2 Side)": 960000,
+          },
+        },
+      },
     },
-    "4x4": {
-      "Classic": {
-        "Manual": {
-          "ACP": 570000,
-          "Glass (1 Side)": 640000,
-          "Glass (2 Side)": 670000
+    "G+3": {
+      "3x3": {
+        Classic: {
+          Manual: {
+            ACP: 670000,
+            "Glass (1 Side)": 790000,
+            "Glass (2 Side)": 830000,
+          },
+          Auto: {},
         },
-        "Auto": {
-          "ACP": 680000,
-          "Glass (1 Side)": 750000,
-          "Glass (2 Side)": 780000
-        }
+        Ultra: {
+          Manual: {
+            ACP: 770000,
+            "Glass (1 Side)": 890000,
+            "Glass (2 Side)": 930000,
+          },
+          Auto: {},
+        },
       },
-      "Ultra": {
-        "Manual": {
-          "ACP": 660000,
-          "Glass (1 Side)": 730000,
-          "Glass (2 Side)": 760000
+      "3.6x3.6": {
+        Classic: {
+          Manual: {
+            ACP: 710000,
+            "Glass (1 Side)": 840000,
+            "Glass (2 Side)": 880000,
+          },
+          Auto: {
+            ACP: 810000,
+            "Glass (1 Side)": 940000,
+            "Glass (2 Side)": 980000,
+          },
         },
-        "Auto": {
-          "ACP": 770000,
-          "Glass (1 Side)": 840000,
-          "Glass (2 Side)": 870000
-        }
-      }
-    }
-  },
-  "G+2": {
-    "3x3": {
-      "Classic": {
-        "Manual": {
-          "ACP": 570000,
-          "Glass (1 Side)": 650000,
-          "Glass (2 Side)": 680000
+        Ultra: {
+          Manual: {
+            ACP: 710000,
+            "Glass (1 Side)": 840000,
+            "Glass (2 Side)": 880000,
+          },
+          Auto: {
+            ACP: 810000,
+            "Glass (1 Side)": 940000,
+            "Glass (2 Side)": 980000,
+          },
         },
-        "Auto": {}
       },
-      "Ultra": {
-        "Manual": {
-          "ACP": 640000,
-          "Glass (1 Side)": 720000,
-          "Glass (2 Side)": 750000
+      "4x4": {
+        Classic: {
+          Manual: {
+            ACP: 770000,
+            "Glass (1 Side)": 910000,
+            "Glass (2 Side)": 960000,
+          },
+          Auto: {
+            ACP: 890000,
+            "Glass (1 Side)": 1030000,
+            "Glass (2 Side)": 1080000,
+          },
         },
-        "Auto": {}
-      }
+        Ultra: {
+          Manual: {
+            ACP: 880000,
+            "Glass (1 Side)": 1020000,
+            "Glass (2 Side)": 1070000,
+          },
+          Auto: {
+            ACP: 1000000,
+            "Glass (1 Side)": 1140000,
+            "Glass (2 Side)": 1190000,
+          },
+        },
+      },
     },
-    "3.6x3.6": {
-      "Classic": {
-        "Manual": {
-          "ACP": 610000,
-          "Glass (1 Side)": 700000,
-          "Glass (2 Side)": 730000
-        },
-        "Auto": {
-          "ACP": 700000,
-          "Glass (1 Side)": 790000,
-          "Glass (2 Side)": 820000
-        }
-      },
-      "Ultra": {
-        "Manual": {
-          "ACP": 610000,
-          "Glass (1 Side)": 700000,
-          "Glass (2 Side)": 730000
-        },
-        "Auto": {
-          "ACP": 700000,
-          "Glass (1 Side)": 790000,
-          "Glass (2 Side)": 820000
-        }
-      }
-    },
-    "4x4": {
-      "Classic": {
-        "Manual": {
-          "ACP": 660000,
-          "Glass (1 Side)": 760000,
-          "Glass (2 Side)": 780000
-        },
-        "Auto": {
-          "ACP": 750000,
-          "Glass (1 Side)": 850000,
-          "Glass (2 Side)": 870000
-        }
-      },
-      "Ultra": {
-        "Manual": {
-          "ACP": 750000,
-          "Glass (1 Side)": 850000,
-          "Glass (2 Side)": 870000
-        },
-        "Auto": {
-          "ACP": 840000,
-          "Glass (1 Side)": 940000,
-          "Glass (2 Side)": 960000
-        }
-      }
-    }
-  },
-  "G+3": {
-    "3x3": {
-      "Classic": {
-        "Manual": {
-          "ACP": 670000,
-          "Glass (1 Side)": 790000,
-          "Glass (2 Side)": 830000
-        },
-        "Auto": {}
-      },
-      "Ultra": {
-        "Manual": {
-          "ACP": 770000,
-          "Glass (1 Side)": 890000,
-          "Glass (2 Side)": 930000
-        },
-        "Auto": {}
-      }
-    },
-    "3.6x3.6": {
-      "Classic": {
-        "Manual": {
-          "ACP": 710000,
-          "Glass (1 Side)": 840000,
-          "Glass (2 Side)": 880000
-        },
-        "Auto": {
-          "ACP": 810000,
-          "Glass (1 Side)": 940000,
-          "Glass (2 Side)": 980000
-        }
-      },
-      "Ultra": {
-        "Manual": {
-          "ACP": 710000,
-          "Glass (1 Side)": 840000,
-          "Glass (2 Side)": 880000
-        },
-        "Auto": {
-          "ACP": 810000,
-          "Glass (1 Side)": 940000,
-          "Glass (2 Side)": 980000
-        }
-      }
-    },
-    "4x4": {
-      "Classic": {
-        "Manual": {
-          "ACP": 770000,
-          "Glass (1 Side)": 910000,
-          "Glass (2 Side)": 960000
-        },
-        "Auto": {
-          "ACP": 890000,
-          "Glass (1 Side)": 1030000,
-          "Glass (2 Side)": 1080000
-        }
-      },
-      "Ultra": {
-        "Manual": {
-          "ACP": 880000,
-          "Glass (1 Side)": 1020000,
-          "Glass (2 Side)": 1070000
-        },
-        "Auto": {
-          "ACP": 1000000,
-          "Glass (1 Side)": 1140000,
-          "Glass (2 Side)": 1190000
-        }
-      }
-    }
-  }
-};
-
-document.getElementById('calculateBtn').addEventListener('click', function () {
-  const floorInput = document.getElementById('floors').value;
-  const size = document.getElementById('size').value;
-  const model = document.getElementById('model').value;
-  const type = document.getElementById('type').value;
-  const door = document.getElementById('door').value;
-  const location = document.getElementById('location').value;
-  const additional = document.getElementById('additional').value;
-  const doorMaterial = document.getElementById('doorMaterial').value;
-
-  const resultDiv = document.getElementById('result');
-
-  // Validate required fields
-if (!floorInput || !size || !model || !type || !location || additional === "" || !doorMaterial) {
-    resultDiv.textContent = "❗ Please select all options.";
-    return;
-  }
-
-  const floor = floorInput.toUpperCase();
-
-  // Get base price from predefined pricing object
-  const basePrice = prices?.[floor]?.[size]?.[model]?.[type]?.[doorMaterial];
-
-  if (basePrice === undefined) {
-    resultDiv.textContent = "❌ Price not available for the selected configuration.";
-    return;
-  }
-
-  // Floor Multiplier
-  let floorMultiplier = 1;
-  if (floor === "G+1") floorMultiplier = 2;
-  else if (floor === "G+2") floorMultiplier = 3;
-  else if (floor === "G+3") floorMultiplier = 4;
-
-  // Discount Logic
-  let discount = 0;
-  if (model === "Classic") {
-    discount = { "G+1": 5000, "G+2": 10000, "G+3": 15000 }[floor] || 0;
-  } else if (model === "Ultra") {
-    discount = { "G+1": 10000, "G+2": 15000, "G+3": 20000 }[floor] || 0;
-  }
-
-  // Additional Cost
-  const accessoryCostMap = {
-    none: 0,
-    rf_lop: 10000,
-    rf_cop: 15000,
-    finger_lop: 15000,
-    finger_cop: 20000
   };
-  const additionalCost = accessoryCostMap[additional] || 0;
 
-  // Door Cost (only if type is Manual)
-  let doorCost = 0;
-  let baseDoorCost = 0;
-
-  if (type === "Manual") {
-    const doorCostMap = {
-      none : 0,
-      ms_half_vision: 15000,
-      ms_full_vision: 20000,
-      ss_half_vision: 25000,
-      ss_full_vision: 30000
-    };
-    baseDoorCost = doorCostMap[door] || 0;
-    doorCost = baseDoorCost * floorMultiplier;
-  }
-
-  // Outdoor cost
-  const outdoorCost = location === "Outdoor" ? 40000 : 0;
-
-  // Total Calculations
-  const totalAdditional = additionalCost + doorCost + outdoorCost;
-  const totalBeforeDiscount = basePrice + totalAdditional;
-  const finalPrice = totalBeforeDiscount - discount;
-
-  // Result Output
-  resultDiv.style.display = 'block';
-  resultDiv.innerHTML = `
-    ✅ <strong>Base Price</strong>: ₹
-    ${basePrice.toLocaleString("en-IN")}<br>
-    ✅ <strong>Swing Door Cost</strong>: ₹${doorCost.toLocaleString("en-IN")}<br>
-    ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
-    ✅ <strong>Extra Accesories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
-    ➖ <i style="color: red;">Discount for Selected Model</i>: ₹${discount.toLocaleString("en-IN")}<br>
-    ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
-  `;
-
-  // Scroll to the result div smoothly
-  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
-
-
-    document.getElementById('type').addEventListener('change', function () {
-      const doorContainer = document.getElementById('door-container');
-      if (this.value === 'Manual') {
-        doorContainer.style.display = 'block';
-      } else {
-        doorContainer.style.display = 'none';
-        document.getElementById('door').value = '';
-      }
-    });
-
-    // Restrict Door Type options based on Size
-    const sizeSelect = document.getElementById('size');
-    const typeSelect = document.getElementById('type');
-    const originalTypeOptions = Array.from(typeSelect.options);
-
-    sizeSelect.addEventListener('change', function () {
-      const selectedSize = this.value;
-      typeSelect.innerHTML = '';
-
-      if (selectedSize === '3x3') {
-        const manualOption = originalTypeOptions.find(opt => opt.value === 'Manual');
-        typeSelect.appendChild(manualOption.cloneNode(true));
-        typeSelect.value = 'Manual'; // select Manual by default
-
-        // Show swing door container because Manual is selected
-        document.getElementById('door-container').style.display = 'block';
-        document.getElementById('door').value = ''; // reset swing door select
-      } else {
-        originalTypeOptions.forEach(opt => typeSelect.appendChild(opt.cloneNode(true)));
-
-        // Reset door type and hide swing door container
-        typeSelect.value = '';
-        document.getElementById('door-container').style.display = 'none';
-        document.getElementById('door').value = '';
-      }
-    });
-
-// AMC Prices based on model, door type, and floors
-const amcPrices = {
-  "Basic": {
-    "Manual": {
-      "G+1": {
-        "Classic": 8000,
-        "Ultra": 12000
-      },
-      "G+2": {
-        "Classic": 20000,
-        "Ultra": 14000
-      }
-    },
-    "Auto": {
-      "G+1": {
-        "Classic": 10000,
-        "Ultra": 14000
-      },
-      "G+2": {
-        "Classic": 12000,
-        "Ultra": 17000
-      }
+  // Show/hide Swing Door Type container based on Door Type selection
+  document.getElementById('type').addEventListener('change', function () {
+    const doorContainer = document.getElementById('door-container');
+    if (this.value === 'Manual') {
+      doorContainer.style.display = 'block';
+    } else {
+      doorContainer.style.display = 'none';
+      document.getElementById('door').value = '';
     }
-  },
-  "Comprehensive": {
-    "Manual": {
-      "G+1": {
-        "Classic": 30000,
-        "Ultra": 35000
-      },
-      "G+2": {
-        "Classic": 40000,
-        "Ultra": 45000
-      }
-    },
-    "Auto": {
-      "G+1": {
-        "Classic": 40000,
-        "Ultra": 45000
-      },
-      "G+2": {
-        "Classic": 50000,
-        "Ultra": 55000
-      }
+  });
+
+  // Restrict Door Type options based on Size
+  const sizeSelect = document.getElementById('size');
+  const typeSelect = document.getElementById('type');
+  const originalTypeOptions = Array.from(typeSelect.options);
+
+  sizeSelect.addEventListener('change', function () {
+    const selectedSize = this.value;
+    typeSelect.innerHTML = '';
+
+    if (selectedSize === '3x3') {
+      const manualOption = originalTypeOptions.find((opt) => opt.value === 'Manual');
+      typeSelect.appendChild(manualOption.cloneNode(true));
+      typeSelect.value = 'Manual'; // select Manual by default
+
+      // Show swing door container because Manual is selected
+      document.getElementById('door-container').style.display = 'block';
+      document.getElementById('door').value = ''; // reset swing door select
+    } else {
+      originalTypeOptions.forEach((opt) => typeSelect.appendChild(opt.cloneNode(true)));
+
+      // Reset door type and hide swing door container
+      typeSelect.value = '';
+      document.getElementById('door-container').style.display = 'none';
+      document.getElementById('door').value = '';
     }
-  }
-};
+  });
 
+  // AMC Prices based on model, door type, and floors
+  const amcPrices = {
+    Basic: {
+      Manual: {
+        "G+1": {
+          Classic: 8000,
+          Ultra: 12000,
+        },
+        "G+2": {
+          Classic: 20000,
+          Ultra: 14000,
+        },
+      },
+      Auto: {
+        "G+1": {
+          Classic: 10000,
+          Ultra: 14000,
+        },
+        "G+2": {
+          Classic: 12000,
+          Ultra: 17000,
+        },
+      },
+    },
+    Comprehensive: {
+      Manual: {
+        "G+1": {
+          Classic: 30000,
+          Ultra: 35000,
+        },
+        "G+2": {
+          Classic: 40000,
+          Ultra: 45000,
+        },
+      },
+      Auto: {
+        "G+1": {
+          Classic: 40000,
+          Ultra: 45000,
+        },
+        "G+2": {
+          Classic: 50000,
+          Ultra: 55000,
+        },
+      },
+    },
+  };
 
-// AMC Cost Calculation
-document.getElementById('calculateBtn').addEventListener('click', function () {
-  const floorInput = document.getElementById('floors').value;
-  const size = document.getElementById('size').value;
-  const model = document.getElementById('model').value;
-  const type = document.getElementById('type').value;
-  const doorMaterial = document.getElementById('doorMaterial').value;
-  const amc = document.getElementById('amc').value.trim().toLowerCase();
-  const amcType = document.getElementById('amc-type').value;
-
-  // Debugging logs
-  console.log("AMC:", amc);
-  console.log("AMC Type:", amcType);
-  console.log("Door Type:", type);
-  console.log("Floors:", floorInput);
-  console.log("Model:", model);
-
-  // Get base price from object
-  const basePrice = prices[floorInput][size][model][type][doorMaterial];
-
-  // Calculate Swing Door Cost (if manual)
-  let swingDoorCost = 0;
-  if (type === "Manual") {
+    // Combined Calculate Price button click event listener with enhanced validation feedback
+  document.getElementById('calculateBtn').addEventListener('click', function () {
+    const floorInput = document.getElementById('floors').value;
+    const size = document.getElementById('size').value;
+    const model = document.getElementById('model').value;
+    const type = document.getElementById('type').value;
+    const doorMaterial = document.getElementById('doorMaterial').value;
+    const location = document.getElementById('location').value;
+    const additional = document.getElementById('additional').value;
     const door = document.getElementById('door').value;
-    const doorCostMap = {
+    const amc = document.getElementById('amc').value.trim().toLowerCase();
+    const amcType = document.getElementById('amc-type').value;
+
+    const resultDiv = document.getElementById('result');
+    const requiredDropdownsContainer = document.querySelector('.required-dropdowns');
+
+    // Validate required fields (first 6 dropdowns inside required-dropdowns)
+    const requiredFields = [
+      { id: 'floors', value: floorInput },
+      { id: 'size', value: size },
+      { id: 'model', value: model },
+      { id: 'type', value: type },
+      { id: 'doorMaterial', value: doorMaterial },
+      { id: 'location', value: location },
+    ];
+
+    // Find which required dropdowns are empty
+    const invalidFields = requiredFields.filter(field => !field.value);
+
+    if (invalidFields.length > 0) {
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = "❗ Please select all options.";
+
+      // Scroll to result box
+      resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // After 0.5s scroll back to required-dropdowns container and highlight invalid dropdowns
+      setTimeout(() => {
+        requiredDropdownsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Remove any previous highlights
+        requiredDropdownsContainer.querySelectorAll('select').forEach(sel => {
+          sel.classList.remove('highlight-pulse');
+        });
+
+        // Add highlight-pulse class to invalid dropdowns
+        invalidFields.forEach(field => {
+          const selectElem = document.getElementById(field.id);
+          if (selectElem) {
+            selectElem.classList.add('highlight-pulse');
+            // Remove highlight after animation ends (~4.5s for 3 pulses of 1.5s)
+            setTimeout(() => {
+              selectElem.classList.remove('highlight-pulse');
+            }, 4500);
+          }
+        });
+      }, 750);
+
+      return;
+    }
+
+    // Get base price from predefined pricing object
+    const basePrice = prices?.[floorInput]?.[size]?.[model]?.[type]?.[doorMaterial];
+
+    if (basePrice === undefined) {
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = "❌ Price not available for the selected configuration.";
+      return;
+    }
+
+    // Calculate Swing Door Cost (if manual)
+    let swingDoorCost = 0;
+    if (type === "Manual") {
+      const doorCostMap = {
+        none: 0,
+        ms_half_vision: 15000,
+        ms_full_vision: 20000,
+        ss_half_vision: 25000,
+        ss_full_vision: 30000,
+      };
+      swingDoorCost = doorCostMap[door] || 0;
+    }
+
+    // Indoor/Outdoor cost
+    const outdoorCost = location === "Outdoor" ? 40000 : 0;
+
+    // Extra Accessories
+    const accessoryCostMap = {
       none: 0,
-      ms_half_vision: 15000,
-      ms_full_vision: 20000,
-      ss_half_vision: 25000,
-      ss_full_vision: 30000
+      rf_lop: 10000,
+      rf_cop: 15000,
+      finger_lop: 15000,
+      finger_cop: 20000,
     };
-    swingDoorCost = doorCostMap[door] || 0;
-  }
+    const additionalCost = accessoryCostMap[additional] || 0;
 
-  // Indoor/Outdoor cost
-  const location = document.getElementById('location').value;
-  const outdoorCost = location === "Outdoor" ? 40000 : 0;
+    // Discount based on model and floor
+    let discount = 0;
+    if (model === "Classic") {
+      discount = { "G+1": 5000, "G+2": 10000, "G+3": 15000 }[floorInput] || 0;
+    } else if (model === "Ultra") {
+      discount = { "G+1": 10000, "G+2": 15000, "G+3": 20000 }[floorInput] || 0;
+    }
 
-  // Extra Accessories
-  const additional = document.getElementById('additional').value;
-  const accessoryCostMap = {
-    none: 0,
-    rf_lop: 10000,
-    rf_cop: 15000,
-    finger_lop: 15000,
-    finger_cop: 20000
-  };
-  const additionalCost = accessoryCostMap[additional] || 0;
+    // AMC Cost calculation
+    let amcCost = 0;
+    if (amc === "yes") {
+      amcCost = amcPrices?.[amcType]?.[type]?.[floorInput]?.[model] || 0;
+    }
 
-  // Discount based on model and floor
-  let discount = 0;
-  if (model === "Classic") {
-    discount = { "G+1": 5000, "G+2": 10000, "G+3": 15000 }[floorInput] || 0;
-  } else if (model === "Ultra") {
-    discount = { "G+1": 10000, "G+2": 15000, "G+3": 20000 }[floorInput] || 0;
-  }
+    // Total additional costs
+    const totalAdditional = swingDoorCost + outdoorCost + additionalCost;
 
-  // AMC Cost calculation
-  let amcCost = 0;
-  if (amc === "yes") {
-    // Debug
-    console.log("AMC Prices:", amcPrices[amcType][type][floorInput][model]);
-    amcCost = amcPrices?.[amcType]?.[type]?.[floorInput]?.[model] || 0;
-  }
+    // Final Price calculation
+    const totalPrice = basePrice + totalAdditional - discount;
 
-  // Total additional costs
-  const totalAdditional = swingDoorCost + outdoorCost + additionalCost;
+    // Show results
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+      ✅ <strong>Base Price</strong>: ₹${basePrice.toLocaleString("en-IN")}<br>
+      ✅ <strong>Swing Door Cost</strong>: ₹${swingDoorCost.toLocaleString("en-IN")}<br>
+      ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
+      ✅ <strong>Extra Accessories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
+      ➖ <i style="color: red;">Discount for Selected Model</i>: ₹${discount.toLocaleString("en-IN")}<br>
+      ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
+      💰 <strong>Final Price</strong>: ₹${totalPrice.toLocaleString("en-IN")}<br>
+      ${amc === "yes" ? `✅ <strong>AMC Cost (${amcType})</strong>: ₹${amcCost.toLocaleString("en-IN")}` : ''}
+    `;
 
-  // Final Price calculation
-  const totalPrice = basePrice + totalAdditional - discount;
-
-  // Show results
-  const resultDiv = document.getElementById('result');
-  resultDiv.style.display = 'block';
-  resultDiv.innerHTML = `
-    ✅ <strong>Base Price</strong>: ₹${basePrice.toLocaleString("en-IN")}<br>
-    ✅ <strong>Swing Door Cost</strong>: ₹${swingDoorCost.toLocaleString("en-IN")}<br>
-    ✅ <strong>Indoor or Outdoor Cost</strong>: ₹${outdoorCost.toLocaleString("en-IN")}<br>
-    ✅ <strong>Extra Accessories Cost</strong>: ₹${additionalCost.toLocaleString("en-IN")}<br>
-    ➖ <i style="color: red;">Discount for Selected Model</i>: ₹${discount.toLocaleString("en-IN")}<br>
-    ➕ <strong>Total Additional Cost</strong>: ₹${totalAdditional.toLocaleString("en-IN")}<br>
-    💰 <strong>Final Price</strong>: ₹${totalPrice.toLocaleString("en-IN")}<br>
-    ${amc === "yes" ? `✅ <strong>AMC Cost (${amcType})</strong>: ₹${amcCost.toLocaleString("en-IN")}` : ''}
-  `;
-
-  // Scroll to the result div smoothly
-  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
+    // Scroll to the result div smoothly
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 </script>
+
+</body>
+</html>
