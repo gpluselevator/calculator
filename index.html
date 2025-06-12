@@ -509,14 +509,18 @@
     // Updated media data with Google Slide URLs and multiple videos
     const mediaData = {
       "3x3_Classic_Manual_ACP": {
-        slideUrl: "https://docs.google.com/presentation/d/e/2PACX-1vSJd8Pq3-JSoCgDbhhev4Ue_6Ym6GXAStkGBGXKCEic_k-XSiEuC68i1jePp59GvUyZ_tAPIWs3f8wG/pubembed?start=false&loop=false&delayms=3000",
+        slides: [
+          "https://docs.google.com/presentation/d/e/2PACX-1vSJd8Pq3-JSoCgDbhhev4Ue_6Ym6GXAStkGBGXKCEic_k-XSiEuC68i1jePp59GvUyZ_tAPIWs3f8wG/pubembed?start=false&loop=false&delayms=3000"
+        ],
         videos: [
           "https://www.youtube.com/embed/vYvDCgiDqk4",
           "https://www.youtube.com/embed/vYvDCgiDqk4"
         ]
       },
       "3.6x3.6_Classic_Manual_ACP": {
-        slideUrl: "https://docs.google.com/presentation/d/e/2PACX-1vSJd8Pq3-JSoCgDbhhev4Ue_6Ym6GXAStkGBGXKCEic_k-XSiEuC68i1jePp59GvUyZ_tAPIWs3f8wG/pubembed?start=false&loop=false&delayms=3000",
+        slides: [
+          "https://docs.google.com/presentation/d/e/2PACX-1vSJd8Pq3-JSoCgDbhhev4Ue_6Ym6GXAStkGBGXKCEic_k-XSiEuC68i1jePp59GvUyZ_tAPIWs3f8wG/pubembed?start=false&loop=false&delayms=3000",
+          ],
         videos: [
           "https://www.youtube.com/embed/vYvDCgiDqk4"
         ]
@@ -647,15 +651,18 @@
       videoColumn.innerHTML = '';
 
       if (media) {
-        // Insert Google Slide iframe (one per config)
-        if (media.slideUrl) {
+      // Insert Google Slide iframes (multiple slides supported)
+      if (media.slides && media.slides.length > 0) {
+        media.slides.forEach((slideUrl, idx) => {
           const slideIframe = document.createElement('iframe');
-          slideIframe.src = media.slideUrl;
-          slideIframe.title = "Google Slide presentation";
+          slideIframe.src = slideUrl;
+          slideIframe.title = `Google Slide presentation ${idx + 1}`;
           slideIframe.allowFullscreen = true;
           slideIframe.setAttribute('frameborder', '0');
+          slideIframe.style.marginBottom = '1rem';
           slideColumn.appendChild(slideIframe);
-        }
+        });
+      }
 
         // Insert videos dynamically (any number)
         if (media.videos && media.videos.length > 0) {
