@@ -17,6 +17,9 @@
       min-height: 100vh;
       animation: fadeIn 1s ease-in-out;
     }
+    main {
+      padding: 1rem 2rem;
+    }
     label {
       font-weight: 600;
       margin-top: 1rem;
@@ -115,7 +118,7 @@
       flex-wrap: nowrap;
       justify-content: space-between;
     }
-    #images-column,
+    #slide-column,
     #video-column {
       border: 1.5px solid #1e2a47;
       border-radius: 8px;
@@ -124,26 +127,26 @@
       background-color: #f2f2f2;
       box-shadow: 0 2px 6px rgba(30, 42, 71, 0.05);
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 0.5rem;
-      justify-content: flex-start;
       overflow: auto;
     }
-    #images-column {
+    #slide-column {
       flex: 3;
+      justify-content: center;
+      align-items: center;
     }
-    #images-column img {
-      width: calc(50% - 0.5rem);
-      border-radius: 6px;
-      object-fit: cover;
-      max-height: 150px;
+    #slide-column iframe {
+      width: 100%;
+      height: 400px;
+      border-radius: 8px;
+      border: none;
+      object-fit: contain;
     }
     #video-column {
       flex: 1;
-      flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      overflow-y: auto;
     }
     #video-column iframe {
       width: 100%;
@@ -172,15 +175,14 @@
       #media-container {
         flex-direction: column;
       }
-      #images-column,
+      #slide-column,
       #video-column {
         width: 100%;
         flex: none;
         max-height: none;
       }
-      #images-column img {
-        width: 100%;
-        max-height: none;
+      #slide-column iframe {
+        height: 250px;
       }
       #video-column iframe {
         height: 200px;
@@ -366,7 +368,7 @@
 
     <!-- Updated media container below result -->
     <div id="media-container" style="display: none; margin-top: 20px;" aria-live="polite" aria-atomic="true" role="region">
-      <div id="images-column" aria-label="Model images"></div>
+      <div id="slide-column" aria-label="Google Slide presentation"></div>
       <div id="video-column" aria-label="Model videos"></div>
     </div>
   </main>
@@ -504,28 +506,17 @@
       }
     };
 
-    // Updated media data with multiple videos and images for demo
+    // Updated media data with Google Slide URLs and multiple videos
     const mediaData = {
       "3x3_Classic_Manual_ACP": {
-        images: [
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg",
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg",
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg",
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg"
-        ],
+        slideUrl: "https://docs.google.com/presentation/d/e/2PACX-1vSJd8Pq3-JSoCgDbhhev4Ue_6Ym6GXAStkGBGXKCEic_k-XSiEuC68i1jePp59GvUyZ_tAPIWs3f8wG/pubembed?start=false&loop=false&delayms=3000",
         videos: [
           "https://www.youtube.com/embed/vYvDCgiDqk4",
           "https://www.youtube.com/embed/vYvDCgiDqk4"
         ]
       },
       "3.6x3.6_Classic_Manual_ACP": {
-        images: [
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg",
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg",
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg",
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg",
-          "https://federalelevator.com/wp-content/uploads/2020/07/DSC08172-scaled.jpg"
-        ],
+        slideUrl: "https://docs.google.com/presentation/d/e/2PACX-1vSJd8Pq3-JSoCgDbhhev4Ue_6Ym6GXAStkGBGXKCEic_k-XSiEuC68i1jePp59GvUyZ_tAPIWs3f8wG/pubembed?start=false&loop=false&delayms=3000",
         videos: [
           "https://www.youtube.com/embed/vYvDCgiDqk4"
         ]
@@ -549,7 +540,7 @@
       const resultDiv = document.getElementById('result');
       const requiredDropdownsContainer = document.querySelector('.required-dropdowns');
       const mediaContainer = document.getElementById('media-container');
-      const imagesColumn = document.getElementById('images-column');
+      const slideColumn = document.getElementById('slide-column');
       const videoColumn = document.getElementById('video-column');
 
       // Validate required fields
@@ -567,6 +558,8 @@
         resultDiv.textContent = "❗ Please select all options.";
         resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
         mediaContainer.style.display = 'none'; // Hide media if validation fails
+        slideColumn.innerHTML = '';
+        videoColumn.innerHTML = '';
         setTimeout(() => {
           requiredDropdownsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
           requiredDropdownsContainer.querySelectorAll('select').forEach(sel => sel.classList.remove('highlight-pulse'));
@@ -587,6 +580,8 @@
         resultDiv.style.display = 'block';
         resultDiv.textContent = "❌ Price not available for the selected configuration.";
         mediaContainer.style.display = 'none'; // Hide media if no price
+        slideColumn.innerHTML = '';
+        videoColumn.innerHTML = '';
         return;
       }
 
@@ -648,29 +643,32 @@
       const media = mediaData[mediaKey];
 
       // Clear previous media content
-      imagesColumn.innerHTML = '';
+      slideColumn.innerHTML = '';
       videoColumn.innerHTML = '';
 
       if (media) {
-        // Populate images dynamically (any number)
-        media.images.forEach((imgUrl, idx) => {
-          const img = document.createElement('img');
-          img.src = imgUrl;
-          img.alt = `Model image ${idx + 1}`;
-          img.loading = 'lazy';
-          imagesColumn.appendChild(img);
-        });
+        // Insert Google Slide iframe (one per config)
+        if (media.slideUrl) {
+          const slideIframe = document.createElement('iframe');
+          slideIframe.src = media.slideUrl;
+          slideIframe.title = "Google Slide presentation";
+          slideIframe.allowFullscreen = true;
+          slideIframe.setAttribute('frameborder', '0');
+          slideColumn.appendChild(slideIframe);
+        }
 
-        // Populate videos dynamically (any number)
-        media.videos.forEach((videoUrl, idx) => {
-          const iframe = document.createElement('iframe');
-          iframe.src = videoUrl;
-          iframe.title = `Model video ${idx + 1}`;
-          iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-          iframe.allowFullscreen = true;
-          iframe.style.marginBottom = '1rem';
-          videoColumn.appendChild(iframe);
-        });
+        // Insert videos dynamically (any number)
+        if (media.videos && media.videos.length > 0) {
+          media.videos.forEach((videoUrl, idx) => {
+            const iframe = document.createElement('iframe');
+            iframe.src = videoUrl;
+            iframe.title = `Model video ${idx + 1}`;
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+            iframe.style.marginBottom = '1rem';
+            videoColumn.appendChild(iframe);
+          });
+        }
 
         mediaContainer.style.display = 'flex';
       } else {
